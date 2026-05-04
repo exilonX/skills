@@ -6,20 +6,21 @@ If you're new to these skills, read Matt's original repo first — the philosoph
 
 ## Install
 
-This fork lives at a stable path on disk and is symlinked into Claude Code's user-level skills directory so every project picks it up automatically.
+This fork lives at a stable path on disk. The linker populates Claude Code's user-level skills directory (`~/.claude/skills/<skill-name>`) from each skill in the repo's bucket layout, flattening it. Behaviour is OS-dependent:
+
+- **macOS / Linux:** real symlinks. Edits in the repo go live instantly.
+- **Windows (Git Bash):** file copies. Re-run the linker after editing a skill to push the change to the live directory. (Native symlinks would need elevation or Developer Mode; copies are simpler and work in any shell.)
 
 ```bash
 # 1. Clone wherever you keep your tools
 git clone git@github.com:exilonX/skills.git ~/code/skills
+cd ~/code/skills
 
-# 2. Symlink into Claude Code's user-level skills directory
-# Windows (Developer Mode enabled, or run as admin):
-#   New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\.claude\skills" -Target "G:\code\skills\skills"
-# macOS / Linux:
-ln -s ~/code/skills ~/.claude/skills
+# 2. Populate ~/.claude/skills/. Skills under deprecated/ are skipped.
+bash scripts/link-skills.sh
 ```
 
-After that, every Claude Code session in any project gets `/grill-me`, `/zoom-out`, `/to-prd`, etc. for free. Update the fork in place; no per-project install step.
+After that, every Claude Code session in any project gets `/grill-me`, `/zoom-out`, `/to-prd`, etc. for free. On Windows, treat `link-skills.sh` as a deploy step: edit the repo, run the script, and the next Claude Code session sees your change. **Always edit the repo, never the live copy** — the next sync will silently overwrite changes made directly under `~/.claude/skills/`.
 
 ## Bootstrap a new project
 

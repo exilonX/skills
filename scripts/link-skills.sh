@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Links all skills in the repository to ~/.claude/skills, so that
-# they can be used by the local Claude CLI.
+# Populates ~/.claude/skills with every non-deprecated skill in the repository
+# so the local Claude CLI loads them. Behaviour depends on the platform:
+#   - macOS/Linux: real symlinks (edits in the repo are live immediately)
+#   - Windows + Git Bash (default): file copies (re-run after editing to sync)
+# Skills under skills/deprecated/ are skipped intentionally — link them
+# individually later if needed.
 
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
 DEST="$HOME/.claude/skills"
@@ -23,7 +27,7 @@ fi
 
 mkdir -p "$DEST"
 
-find "$REPO/skills" -name SKILL.md -not -path '*/node_modules/*' -print0 |
+find "$REPO/skills" -name SKILL.md -not -path '*/node_modules/*' -not -path '*/deprecated/*' -print0 |
 while IFS= read -r -d '' skill_md; do
   src="$(dirname "$skill_md")"
   name="$(basename "$src")"

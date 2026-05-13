@@ -95,6 +95,7 @@ These help you align with the agent before you get started, and think deeply abo
 
 Skills used daily for code work.
 
+- **[architecture-diagram](./skills/engineering/architecture-diagram/SKILL.md)** — Generate a validated Mermaid architecture diagram of the current repo. Local port of gitdiagram's two-prompt pipeline; outputs `docs/architecture.mmd` (+ optional SVG).
 - **[diagnose](./skills/engineering/diagnose/SKILL.md)** — Disciplined diagnosis loop for hard bugs and performance regressions: reproduce → minimise → hypothesise → instrument → fix → regression-test.
 - **[grill-with-docs](./skills/engineering/grill-with-docs/SKILL.md)** — Grilling session that challenges your plan against the existing domain model, sharpens terminology, and updates `CONTEXT.md` and ADRs inline.
 - **[improve-codebase-architecture](./skills/engineering/improve-codebase-architecture/SKILL.md)** — Find deepening opportunities in a codebase, informed by the domain language in `CONTEXT.md` and the decisions in `docs/adr/`.

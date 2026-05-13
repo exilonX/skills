@@ -2,6 +2,7 @@
 
 Skills I use daily for code work.
 
+- **[architecture-diagram](./architecture-diagram/SKILL.md)** — Generate a validated Mermaid architecture diagram of the current repo. Local port of gitdiagram's two-prompt pipeline; outputs `docs/architecture.mmd` (+ optional SVG).
 - **[diagnose](./diagnose/SKILL.md)** — Disciplined diagnosis loop for hard bugs and performance regressions: reproduce → minimise → hypothesise → instrument → fix → regression-test.
 - **[grill-with-docs](./grill-with-docs/SKILL.md)** — Grilling session that challenges your plan against the existing domain model, sharpens terminology, and updates `CONTEXT.md` and ADRs inline.
 - **[triage](./triage/SKILL.md)** — Triage issues through a state machine of triage roles.

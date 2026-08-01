@@ -41,6 +41,8 @@ A starting situation that generates work, then merges onto the main flow.
 
 - **Something's broken** → **`/diagnosing-bugs`**. For the hard ones: the bug that resists a first glance, the intermittent flake, the regression that crept in between two known-good states. It refuses to theorise until it has a **tight feedback loop** — one command that already goes red on *this* bug — then fixes with a regression test. Its post-mortem hands off to **`/improve-codebase-architecture`** when the real finding is that there's no good seam to lock the bug down.
 
+  Starting from **production evidence** instead of a local symptom — APM traces, error logs, stack traces, crash reports — enter through **`/fix-from-evidence`**: it interrogates the evidence into a fact sheet, localises the code path, then merges into `/diagnosing-bugs` with ranked hypotheses.
+
 - **A huge, foggy effort — a greenfield project or a huge feature build, too big for one session** → **`/wayfinder`**, the most cognitively demanding flow here. When the way from here to the destination isn't visible yet, it charts a **shared map** of **decision tickets** on the issue tracker and resolves them one at a time — producing **decisions, not deliverables** — until the fog is pushed back and the way is clear. Where **`/grill-with-docs`** sharpens an idea you can hold in one session, wayfinder is for the idea you can't — and it's slower and denser, so save it for exactly that, never a well-scoped feature.
 
   When the map clears, **it hands off, it doesn't build**: merge onto the main flow at **`/to-spec`**, which collapses the map's linked decisions into a buildable plan, then `/to-tickets` and `/implement` as usual. Looping the map straight into `/implement` skips that collapse and throws the linked detail away — go straight to `/implement` only when the effort turned out genuinely small.
@@ -50,6 +52,8 @@ A starting situation that generates work, then merges onto the main flow.
 Not feature work — upkeep.
 
 - **`/improve-codebase-architecture`** — run whenever you have a spare moment to keep the codebase good for agents to operate in. It surfaces **deepening opportunities**; picking one _generates an idea_ you can take into the main flow at `/grill-with-docs`. It's the survey that finds the candidates; **`/codebase-design`** (below) is the bench you design the chosen one on.
+- **`/security-audit`** — a deep, OWASP-aligned, multi-vector audit of the whole project or a scoped area, with taint-traced findings and a severity-ranked fix plan. Expensive and deliberate — run it before a release or periodically, not per-change; the per-change floor is the security section of `/coding-standards`, and `/code-review` checks the diff.
+- **`/architecture-diagram`** — regenerate the validated Mermaid architecture diagram (`docs/architecture.mmd`) after structural changes.
 
 ## Vocabulary underneath
 
@@ -57,6 +61,8 @@ Two model-invoked references that run *beneath* the other skills — each the si
 
 - **`/domain-modeling`** — sharpen the project's *domain* language: challenge a fuzzy term, resolve an overloaded word ("account" doing three jobs), record a hard-to-reverse decision as an ADR. It's the active discipline `/grill-with-docs` drives to keep `CONTEXT.md` a clean glossary.
 - **`/codebase-design`** — the deep-module vocabulary (module, interface, depth, seam, adapter, leverage, locality) for designing a module's *shape*: a lot of behaviour behind a small interface at a clean seam. `/tdd` and `/improve-codebase-architecture` both speak it.
+- **`/coding-standards`** — the implementation-time bar every code change is held to: reuse before reinvention, short single-purpose functions, performance and security defaults. `/implement` and `/tdd` write against it; `/code-review` checks it after the fact.
+- **`/structresponse`** — the fixed answer format (TL;DR → Context → Solution/Findings → Impact → Next actions) that research conclusions, investigation recaps, and non-trivial answers are delivered in, written for a reader who didn't watch the work happen.
 
 ## Crossing sessions
 

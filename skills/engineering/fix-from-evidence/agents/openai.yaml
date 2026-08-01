@@ -1,0 +1,3 @@
+interface:
+  display_name: "Fix From Evidence"
+  short_description: "From APM/logs/stack traces backwards to the defect"

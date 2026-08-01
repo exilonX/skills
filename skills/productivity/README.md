@@ -17,3 +17,4 @@ Model- or user-reachable (rich trigger phrasing so the model can reach for them)
 
 - **[caveman](./caveman/SKILL.md)** — Ultra-compressed communication mode. Cuts token usage ~75% by dropping filler while keeping full technical accuracy.
 - **[grilling](./grilling/SKILL.md)** — Interview the user relentlessly about a plan, decision, or idea until every branch of the decision tree is resolved.
+- **[structresponse](./structresponse/SKILL.md)** — Fixed answer format for research conclusions, investigation recaps, and non-trivial answers: TL;DR → Context → Solution/Findings → Impact → Next actions, written for a reader without the conversation context.

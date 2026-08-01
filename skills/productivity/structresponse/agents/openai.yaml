@@ -1,0 +1,3 @@
+interface:
+  display_name: "Structured Response"
+  short_description: "Fixed answer format for research, plans, and explanations"

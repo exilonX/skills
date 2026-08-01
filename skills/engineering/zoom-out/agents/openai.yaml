@@ -1,0 +1,5 @@
+interface:
+  display_name: "Zoom Out"
+  short_description: "Explain code from a higher-level, whole-system view"
+policy:
+  allow_implicit_invocation: false

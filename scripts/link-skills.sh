@@ -5,8 +5,13 @@ set -euo pipefail
 # so the local Claude CLI loads them. Behaviour depends on the platform:
 #   - macOS/Linux: real symlinks (edits in the repo are live immediately)
 #   - Windows + Git Bash (default): file copies (re-run after editing to sync)
-# Skills under skills/deprecated/ are skipped intentionally — link them
-# individually later if needed.
+# Skills under skills/deprecated/ and skills/in-progress/ are skipped
+# intentionally — link them individually later if needed.
+#
+# A skill that gets renamed, deprecated, or deleted leaves an orphan copy
+# behind in $DEST. The manifest below records what this script installed on
+# the previous run, so the sweep can prune exactly those orphans and never
+# touch skills installed from anywhere else.
 
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
 DEST="$HOME/.claude/skills"
@@ -27,7 +32,12 @@ fi
 
 mkdir -p "$DEST"
 
-find "$REPO/skills" -name SKILL.md -not -path '*/node_modules/*' -not -path '*/deprecated/*' -print0 |
+MANIFEST="$DEST/.linked-from-repo"
+installed="$(mktemp)"
+trap 'rm -f "$installed"' EXIT
+
+find "$REPO/skills" -name SKILL.md -not -path '*/node_modules/*' \
+  -not -path '*/deprecated/*' -not -path '*/in-progress/*' -print0 |
 while IFS= read -r -d '' skill_md; do
   src="$(dirname "$skill_md")"
   name="$(basename "$src")"
@@ -38,5 +48,19 @@ while IFS= read -r -d '' skill_md; do
   fi
 
   ln -sfn "$src" "$target"
+  echo "$name" >> "$installed"
   echo "linked $name -> $src"
 done
+
+# Prune skills this script installed previously that it no longer installs.
+if [ -f "$MANIFEST" ]; then
+  while IFS= read -r name; do
+    name="${name%/}"
+    case "$name" in ''|.|..|*/*) continue ;; esac
+    grep -qxF "$name" "$installed" && continue
+    rm -rf "${DEST:?}/$name"
+    echo "pruned $name (no longer in repo)"
+  done < "$MANIFEST"
+fi
+
+sort -u "$installed" > "$MANIFEST"
